@@ -5,6 +5,8 @@ Problems Completed:
   Problem 2
   Problem 3
   Problem 4
+  Problem 5
+  Problem 6
 
 In Progress Problems:
-  Problem 5
+  Problem 7
