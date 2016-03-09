@@ -7,6 +7,9 @@ Problems Completed:
   Problem 4
   Problem 5
   Problem 6
+  Problem 7
+  Problem 10
 
 In Progress Problems:
-  Problem 7
+  Problem 8 - idk how to do this in C
+  Problem 17
