@@ -1,0 +1,29 @@
+2^1000 = 2^500*2^500 = (2^250*2^250)^2
+
+2^1000 = (((2^8)^5)^5)^5
+
+2^8 = 256
+Sum = 13
+2^40 = 1099511627776 
+Sum = 61
+2^200
+
+Patterns:
+  ones place: 2, 4, 8, 6, 2, 4, 8, 6
+    every 10 power of will be 4 or 6.
+    2^10, 2^30, 2^50 = xxx4
+    2^20, 2^40, 2^60 = xxx6
+  tens place: if(ones place == 6 or 8) (tens * 2) + 1
+  so on and so forth for further places....
+
+Sum25 = 29
+Num25 = 33554432
+Sum50 = 76
+Num50 = 1125899906842624
+
+Sum26 = 40
+Num26 = 67108864
+Sum52 = 79
+Num52 = 4503599627370496
+
+

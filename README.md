@@ -9,7 +9,8 @@ Problems Completed:
   Problem 6
   Problem 7
   Problem 10
+  Problem 17
+  Problem 16
 
 In Progress Problems:
   Problem 8 - idk how to do this in C
-  Problem 17

@@ -14,65 +14,80 @@
 
 #define MAX_WORD_LENGTH 100
 
-char *numDigit[10] = {"and", "one", "two", "three", "four",
+char *numDigit[9] = {"one", "two", "three", "four",
   "five", "six", "seven", "eight", "nine"};
-char *numTeens[11] = {"and", "ten", "eleven", "twelve", "thirteen",
+char *numTeens[10] = {"ten", "eleven", "twelve", "thirteen",
   "fourteen", "fifteen", "sixteen", "seventeen",
   "eighteen", "nineteen"};
-char *numOther[9] = {"and", "twenty", "thirty", "forty", "fifty", "sixty",
+char *numOther[8] = {"twenty", "thirty", "forty", "fifty", "sixty",
   "seventy", "eighty", "ninety"};
 
-void numToWord(int num);
+int numToWord(int num);
 
 int main(int argc, char **argv) {
   int num;
+  int sum;
+  sum = 0;
   num = 1;
   for(; num <= 1000; num++) {
-    printf("Printing %d:\n", num);
-    numToWord(num);
+    sum += numToWord(num);
   } 
+  printf("Sum = %d\n", sum);
   return 0;
 }
 
-void numToWord(int num) {
-  char buff[500];
-  if(num == 1000) {
-    printf("one thousand \n");
-    sprintf(buff, "one thousand");
-  } else if(num > 99) {
-    char tempH[50];
-    char tempT[50];
-    char tempS[50];
-    printf("%s hundred ", numDigit[num/100]);
-    sprintf(tempH, "%s hundred", numDigit[num/100]);
-    num = num % 100;
-    if(num > 19) {
-      printf("%s %s", numOther[0], numOther[(num / 10) - 1]);
-      sprintf(tempT, "%s %s", numOther[0], numOther[(num / 10) - 1]);
-      num = num % 10;
-      if(num > 0) {
-        printf("-%s", numDigit[num]);
-        sprintf(tempS, "-%s", numDigit[num]);
+/** 
+Length:
+4 = "one thousand"
+3 = "hundreds place" (and) (tens place) (single place)
+2 = "tens place" (single place)
+Two Cases: num > 19 OR 9 < num < 20
+1 = "tens place" (single place)
+ */
+int numToWord(int n) {
+  char num[50];
+  char total[100];
+  int count;
+  int len;
+  sprintf(num, "%d", n);
+  len = strlen(num);
+  count = 0;
+  if(len == 4) {
+    sprintf(total, "%s", "onethousand");
+  } else if(len == 3) {
+    // hundreds place
+    sprintf(total, "%s%s", numDigit[(int)num[0] - 49], "hundred");
+    if(num[1] != '0') {
+      if(num[1] > '1') {
+        // 20 through 90
+        sprintf(total, "%s%s%s", total, "and", numOther[(int)num[1] - 50]);
+        if(num[2] != '0') {
+          // ones place for 20 thorugh 90
+          sprintf(total, "%s%s", total, numDigit[(int)num[2] - 49]);
+        }
+        // tens place 10 through 19  
+      } else {
+        sprintf(total, "%s%s%s", total, "and", numTeens[(int)num[2] - 48]);
       }
-    } else if(num > 9 && num < 20) {
-      printf("%s %s", numTeens[0], numTeens[num - 9]);
-      sprintf(tempT, "%s %s", numTeens[0], numTeens[num - 9]);
-      num = 0;
-    } 
-
-    printf("\n");
-  } else if(num > 19) {
-    printf("%s", numOther[(num / 10) - 1]);
-    if(num % 10 != 0) {
-      printf("-%s", numDigit[num % 10]);
+    } else if(num[2] != '0') {
+      sprintf(total, "%s%s%s", total, "and", numDigit[(int)num[2] - 49]);
     }
-    printf("\n");
-    num = 0;
-  } else if(num > 9 && num < 20) {
-    printf("%s\n", numTeens[num - 9]);
-    num = 0;
-  } else if(num > 0){
-    printf("%s\n", numDigit[num]);
+  } else if(len == 2) {
+    // num > 19
+    if(num[0] > '1') {
+      sprintf(total, "%s", numOther[(int)num[0] - 50]);
+      if(num[1] != '0') {
+        sprintf(total, "%s%s", total, numDigit[(int)num[1] - 49]);
+      }
+      // tens place 10 through 19  
+    } else {
+      sprintf(total, "%s", numTeens[(int)num[1] - 48]);
+    }
+  } else {
+    sprintf(total, "%s", numDigit[(int)num[0] - 49]);
   }
+  count += strlen(total);
+  printf("Num = %s\tString = %s\tCount = %d\n", num, total, count);
+  return count;
 }
 
